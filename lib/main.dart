@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/util/dbhelper.dart';
-import 'package:todo_app/model/todo.dart';
+import 'package:todo_app/screens/todolist.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Todo> todos = List<Todo>();
-    DbHelper helper = DbHelper();
-    helper
-        .initializeDb()
-        .then((result) => helper.getTodos().then((result) => todos = result));
-
-    DateTime today = DateTime.now();
-    Todo todo =
-        Todo("Buy Melon", 3, today.toString(), "And make sure they are good");
-
-    var result = helper.insertTodo(todo);
-
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Todos',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Todos'),
     );
   }
 }
@@ -39,39 +26,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      body: TodoList(),
     );
   }
 }
